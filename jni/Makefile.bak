@@ -1,0 +1,20 @@
+INC_PATH=/home/udev/android-ndk-r8/platforms/android-4/arch-arm/usr/include
+
+LIB_PATH=/home/udev/android-ndk-r8/platforms/android-4/arch-arm/usr/lib
+
+GCC=/home/udev/master/prebuilt/linux-x86/toolchain/arm-eabi-4.4.3/bin/arm-eabi-gcc-4.4.3
+
+
+
+CROSS_COMPILE=/home/udev/master/prebuilt/linux-x86/toolchain/arm-eabi-4.4.3/bin/arm-eabi-
+
+all:
+	gcc -Wall -Wextra -Wwrite-strings -fPIC -c -o hook.o hook.c
+	gcc -Wall -Wextra -Wwrite-strings -shared -o hook.so hook.o -ldl
+
+android:
+	NDK_ARCH=arm ndk-gcc -Wall -Wextra -Wwrite-strings -fPIC -c -o hook.o hook.c
+	NDK_ARCH=arm ndk-gcc -Wall -Wextra -Wwrite-strings -shared -o hook.so hook.o -ldl
+
+clean:
+	rm -f *.so *.o
